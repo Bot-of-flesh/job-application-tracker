@@ -1,0 +1,12 @@
+<a href="{{ url_for('register') }}">会社を登録する</a>
+<form method="get" action="/">
+    <input type="text" name="status" value="{{ selected_status }}">
+    <button>絞り込む</button>
+</form>
+
+応募先・選考状況管理アプリ (登録:{{company_count}})
+{% for company in company_list %}
+    <p>{{company["id"]}} <a href="{{ url_for('edit_status', company_id=company['id'])}}">{{ company["name"] }}</a> {{company["status"]}}</p>
+    {% else %}
+    <p>該当する会社はありません</p>
+{% endfor %}

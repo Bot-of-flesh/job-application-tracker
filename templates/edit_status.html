@@ -1,0 +1,6 @@
+    <p>{{company["name"]}}</p>
+    <p>現在の選考状況:{{company["status"]}}</p>
+    <form method="post" action="{{ url_for('edit_status', company_id = company['id']) }}">
+        <input type="text" name="new_status" value="{{company['status']}}">
+        <button>更新</button>
+    </form>

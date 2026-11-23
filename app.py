@@ -98,6 +98,17 @@ def insert_company(name, status, max_companies=None):
         return None
     return ins.lastrowid
 
+def delete_company(company_id):
+    conn = sqlite3.connect("application.db")
+    delete = conn.execute("delete from companies where id = ?", (company_id,))
+    conn.commit()
+    conn.close()
+    if delete.rowcount == 1:
+        return True
+    elif delete.rowcount == 0:
+        return False
+   
+
 def main():
     initialize_database()
     companies = load_companies()

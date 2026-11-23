@@ -17,11 +17,13 @@ def register():
     if flask.request.method == "POST":
         company_name = flask.request.form.get("company_name", "").strip()
         if not company_name:
-            return "会社名を入力してください"
+            error ="会社名を入力してください"
+            return flask.render_template("register.html", error = error)
         else:
             new_id = app.insert_company(company_name, "未応募", max_companies=30)
             if new_id is None:
-                return "登録上限に達しました"
+                error = "登録上限に達しました"
+                return flask.render_template("register.html", company_name = company_name, error = error)
             else:
                 list_url = flask.url_for("home")
                 return flask.redirect(list_url)
@@ -46,6 +48,14 @@ def edit_status(company_id):
             return flask.redirect(list_url)
     else:
         return flask.render_template("edit_status.html", company = company)
+
+@web.route("/delete/<int:company_id>", methods = ["POST"])
+def delete_company(company_id):
+    issuccess = app.delete_company(company_id)
+    if issuccess == True:
+        return flask.redirect("/")
+    else :
+        return "会社が見つかりません"
 
 @web.cli.command("init-db")
 def init_db():

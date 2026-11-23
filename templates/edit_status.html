@@ -1,6 +1,20 @@
-    <p>{{company["name"]}}</p>
-    <p>現在の選考状況:{{company["status"]}}</p>
-    <form method="post" action="{{ url_for('edit_status', company_id = company['id']) }}">
-        <input type="text" name="new_status" value="{{company['status']}}">
-        <button>更新</button>
-    </form>
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>選考状況の変更</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <p>{{company["name"]}}</p>
+        <p>現在の選考状況:{{company["status"]}}</p>
+        <form method="post" action="{{ url_for('edit_status', company_id = company['id']) }}">
+            <input type="text" name="new_status" value="{{company['status']}}">
+            <button>更新</button>
+        </form>
+        <form method="post" action="{{ url_for('delete_company', company_id = company['id']) }}">
+            <button>この会社を削除する</button>
+        </form>
+        <a href="{{ url_for('home') }}">一覧に戻る</a>
+    </body>
+</html>
